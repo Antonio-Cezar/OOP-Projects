@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "e:/3.Projects - GitHub/Projects/CaseSwitch_calc_database",
-      "program": "e:/3.Projects - GitHub/Projects/CaseSwitch_calc_database/build/Debug/outDebug",
+      "cwd": "e:/3.Projects - GitHub/Projects/chat_simulator",
+      "program": "e:/3.Projects - GitHub/Projects/chat_simulator/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
