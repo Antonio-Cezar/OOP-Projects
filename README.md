@@ -48,7 +48,7 @@ The program is menu-based and runs in the terminal.
   Commands are interpreted and executed through a `switch` statement in the main program.
 
 ### Example
-![Demonstration of how it works](images/TaskManagerWorking.jpg.jpg)
+![Demonstration of how it works](images/TaskManagerWorking.jpg)
 
 ---
 
