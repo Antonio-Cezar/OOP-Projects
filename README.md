@@ -20,6 +20,7 @@ The program is menu-based and runs in the terminal.
 
 ### Example
 ![Demonstration of how it works](images/CaseSwitchesWorking.jpg)
+![Demonstration of how it works](images/CaseSwitchesWorking2.jpg)
 
 
 
