@@ -1,49 +1,59 @@
 # CaseSwitch Calc & Database
 
-Et C++-prosjekt som kombinerer en **kalkulator** og en enkel **database** lagret i fil (`database.txt`).  
-Programmet er menybasert og kjører i terminalen.
+A C++ project that combines a **calculator** and a simple **database** stored in a file (`database.txt`).  
+The program is menu-based and runs in the terminal.
 
-## Funksjoner
+## Features
 
-### Kalkulator
-- Addisjon
-- Subtraksjon
-- Multiplikasjon
-- Divisjon (med sjekk mot null)
+### Calculator
+- Addition  
+- Subtraction  
+- Multiplication  
+- Division (with zero check)
 
 ### Database
-- Opprette nye oppføringer (`navn` + `verdi`)
-- Redigere oppføringer (legg til eller trekk fra verdi)
-- Slette oppføringer
-- Vise alle oppføringer
-- Dataene lagres automatisk i `database.txt` ved avslutning og lastes inn ved start
-
+- Create new entries (`name` + `value`)  
+- Edit entries (add or subtract value)  
+- Delete entries  
+- Display all entries  
+- Data is automatically saved to `database.txt` on exit and loaded on startup
 
 ### Example
-![Viser hvordan fungerer](images/CaseSwitchesWorking.jpg)
+![Demonstration of how it works](images/CaseSwitchesWorking.jpg)
 
 
 
 # Task Manager
 
-Et C++-prosjekt som viser bruk av **objektorientert programmering (OOP)** og `switch-case` kontrollflyt.  
-Programmet er menybasert og kjører i terminalen.  
+A C++ project demonstrating the use of **object-oriented programming (OOP)** and `switch-case` control flow.  
+The program is menu-based and runs in the terminal.
 
-## Funksjoner
+## Features
 
-### Oppgaver
-- Legge til nye oppgaver (`enter <tittel>`)
-- Liste alle oppgaver (`list`)
-- Markere oppgaver som fullført (`done <id>`)
-- Slette oppgaver (`rm <id>`)
-- Avslutte programmet (`exit`)
+### Tasks
+- Add new tasks (`enter <title>`)  
+- List all tasks (`list`)  
+- Mark tasks as completed (`done <id>`)  
+- Delete tasks (`rm <id>`)  
+- Exit the program (`exit`)
 
-## OOP-konsepter
-- **Klasser**:  
-  `Task` representerer en oppgave, mens `TaskList` håndterer en samling av oppgaver.
-- **Enkapsulering**:  
-  Feltene i `Task` er private, og kontrolleres via offentlige metoder.
-- **Abstraksjon**:  
-  Brukeren ser enkle kommandoer, mens implementasjonen skjules i klassene.
+## OOP Concepts
+- **Classes**:  
+  `Task` represents an individual task, while `TaskList` manages a collection of tasks.  
+- **Encapsulation**:  
+  The fields in `Task` are private and controlled through public methods.  
+- **Abstraction**:  
+  The user interacts through simple commands, while the logic is handled internally by the classes.  
 - **Switch-case**:  
-  Kommandoene tolkes og styres gjennom en `switch` i hovedprogrammet.
+  Commands are interpreted and executed through a `switch` statement in the main program.
+
+---
+
+## How to Compile & Run
+
+You can compile the projects using any C++ compiler such as `g++`.
+
+**Example (Linux / macOS):**
+```bash
+g++ main.cpp -o CaseSwitch
+./CaseSwitch
