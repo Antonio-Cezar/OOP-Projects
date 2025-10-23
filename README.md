@@ -19,6 +19,10 @@ Programmet er menybasert og kjører i terminalen.
 - Dataene lagres automatisk i `database.txt` ved avslutning og lastes inn ved start
 
 
+### Example
+![Viser hvordan fungerer](images/CaseSwitchesWorking.jpg)
+
+
 
 # Task Manager
 

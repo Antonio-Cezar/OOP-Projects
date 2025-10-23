@@ -1,2 +1,2 @@
 audi 4
-polestar2 4
+polestar2 3
