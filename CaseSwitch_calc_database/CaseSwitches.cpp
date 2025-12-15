@@ -8,42 +8,75 @@
 
 using namespace std;
 
+/*
+============================================================
+ Database class
+ -----------------------------------------------------------
+ - Stores name/value pairs in memory using an unordered_map
+ - Automatically loads data from file on startup
+ - Automatically saves data to file on program exit
+============================================================
+*/
 class Database {
 private:
+    // In-memory storage for database entries
     unordered_map<string, double> data;
+
+    // File used for persistent storage
     const string filename = "database.txt";
 
+    /*
+     * Load database entries from file into memory.
+     * File format:
+     *   <name> <value>
+     */
     void loadFromFile() {
         ifstream file(filename);
+
         if (file.is_open()) {
             string name;
             double value;
+
+            // Read name-value pairs until end of file
             while (file >> name >> value) {
                 data[name] = value;
             }
+
             file.close();
         }
     }
 
+    /*
+     * Save all current database entries to file.
+     * This overwrites the existing file.
+     */
     void saveToFile() {
         ofstream file(filename);
+
         if (file.is_open()) {
             for (const auto& [name, value] : data) {
                 file << name << " " << value << endl;
             }
+
             file.close();
         }
     }
 
 public:
+    // Constructor: load database automatically at startup
     Database() {
         loadFromFile();
     }
 
+    // Destructor: save database automatically on exit
     ~Database() {
         saveToFile();
     }
 
+    /*
+     * Create a new database entry.
+     * Fails if an entry with the same name already exists.
+     */
     void createEntry(const string& name, double value) {
         if (data.find(name) != data.end()) {
             cout << "Error: Entry with name '" << name << "' already exists.\n";
@@ -53,20 +86,30 @@ public:
         }
     }
 
+    /*
+     * Edit an existing entry.
+     * If add == true  → value is added
+     * If add == false → value is subtracted
+     */
     void editEntry(const string& name, double value, bool add) {
         if (data.find(name) == data.end()) {
             cout << "Error: Entry with name '" << name << "' does not exist.\n";
         } else {
             if (add) {
                 data[name] += value;
-                cout << "Added " << value << " to '" << name << "'. New value: " << data[name] << "\n";
+                cout << "Added " << value << " to '" << name
+                     << "'. New value: " << data[name] << "\n";
             } else {
                 data[name] -= value;
-                cout << "Subtracted " << value << " from '" << name << "'. New value: " << data[name] << "\n";
+                cout << "Subtracted " << value << " from '" << name
+                     << "'. New value: " << data[name] << "\n";
             }
         }
     }
 
+    /*
+     * Delete an entry from the database.
+     */
     void deleteEntry(const string& name) {
         if (data.erase(name)) {
             cout << "Entry '" << name << "' deleted successfully.\n";
@@ -75,22 +118,29 @@ public:
         }
     }
 
+    /*
+     * Display all entries currently stored in the database.
+     */
     void displayEntries() {
         if (data.empty()) {
             cout << "Database is empty.\n";
         } else {
-            cout << "\n";
-            cout << "\n";
-            cout << "--- Database Entries ---\n";
+            cout << "\n--- Database Entries ---\n";
             for (const auto& [name, value] : data) {
                 cout << name << ": " << value << endl;
             }
-            cout << "\n";
             cout << "\n";
         }
     }
 };
 
+/*
+============================================================
+ Calculator class
+ -----------------------------------------------------------
+ Simple arithmetic calculator
+============================================================
+*/
 class Calculator {
 public:
     double add(double a, double b) {
@@ -105,6 +155,9 @@ public:
         return a * b;
     }
 
+    /*
+     * Division with safety check for division by zero
+     */
     double divide(double a, double b) {
         if (b != 0) {
             return a / b;
@@ -115,10 +168,19 @@ public:
     }
 };
 
+/*
+============================================================
+ Main program
+ -----------------------------------------------------------
+ - Displays a menu-driven interface
+ - Allows switching between Calculator and Database modules
+============================================================
+*/
 int main() {
     Calculator calc;
     Database db;
 
+    // Main application loop
     while (true) {
         cout << "\n--- C.A.A MAIN ---\n";
         cout << "--- Choose the operation ---\n";
@@ -130,6 +192,7 @@ int main() {
         int choice;
         cin >> choice;
 
+        // Handle invalid input
         if (cin.fail()) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -138,10 +201,15 @@ int main() {
         }
 
         switch (choice) {
+
+            /*
+            --------------------------------------------------
+            Calculator menu
+            --------------------------------------------------
+            */
             case 1: {
                 while (true) {
                     cout << "\n--- C.A.A Calculator ---\n";
-                    cout << "--- Choose the operation ---\n";
                     cout << "--- 1. Addition\n";
                     cout << "--- 2. Subtraction\n";
                     cout << "--- 3. Multiplication\n";
@@ -159,6 +227,7 @@ int main() {
                         continue;
                     }
 
+                    // Return to main menu
                     if (operation == 5) {
                         cout << "Returning to Main Menu...\n";
                         this_thread::sleep_for(chrono::seconds(2));
@@ -173,30 +242,35 @@ int main() {
 
                     switch (operation) {
                         case 1:
-                            cout << "The result of " << a << " + " << b << " is: " << calc.add(a, b) << endl;
+                            cout << "Result: " << calc.add(a, b) << endl;
                             break;
                         case 2:
-                            cout << "The result of " << a << " - " << b << " is: " << calc.subtract(a, b) << endl;
+                            cout << "Result: " << calc.subtract(a, b) << endl;
                             break;
                         case 3:
-                            cout << "The result of " << a << " x " << b << " is: " << calc.multiply(a, b) << endl;
+                            cout << "Result: " << calc.multiply(a, b) << endl;
                             break;
                         case 4:
                             if (b != 0)
-                                cout << "The result of " << a << " / " << b << " is: " << calc.divide(a, b) << endl;
+                                cout << "Result: " << calc.divide(a, b) << endl;
                             else
                                 cout << "Error: Division by zero is not allowed.\n";
                             break;
                     }
+
                     this_thread::sleep_for(chrono::seconds(2));
                 }
                 break;
             }
 
+            /*
+            --------------------------------------------------
+            Database menu
+            --------------------------------------------------
+            */
             case 2: {
                 while (true) {
                     cout << "\n--- C.A.A Database ---\n";
-                    cout << "--- Choose the operation ---\n";
                     cout << "--- 1. Create Entry\n";
                     cout << "--- 2. Edit Entry\n";
                     cout << "--- 3. Delete Entry\n";
@@ -214,6 +288,7 @@ int main() {
                         continue;
                     }
 
+                    // Return to main menu
                     if (dbChoice == 5) {
                         cout << "Returning to Main Menu...\n";
                         this_thread::sleep_for(chrono::seconds(2));
@@ -227,18 +302,18 @@ int main() {
                         case 1:
                             cout << "Enter name for new entry: ";
                             cin >> name;
-                            cout << "Enter value for '" << name << "': ";
+                            cout << "Enter value: ";
                             cin >> value;
                             db.createEntry(name, value);
                             break;
 
                         case 2:
                             db.displayEntries();
-                            cout << "Enter name of entry to edit: ";
+                            cout << "Enter entry name: ";
                             cin >> name;
                             cout << "Enter value to add/subtract: ";
                             cin >> value;
-                            cout << "Choose operation (1. Add, 2. Subtract): ";
+                            cout << "Choose operation (1 = Add, 2 = Subtract): ";
                             int editChoice;
                             cin >> editChoice;
                             db.editEntry(name, value, editChoice == 1);
@@ -246,7 +321,7 @@ int main() {
 
                         case 3:
                             db.displayEntries();
-                            cout << "Enter name of entry to delete: ";
+                            cout << "Enter entry name to delete: ";
                             cin >> name;
                             db.deleteEntry(name);
                             break;
@@ -255,11 +330,17 @@ int main() {
                             db.displayEntries();
                             break;
                     }
+
                     this_thread::sleep_for(chrono::seconds(2));
                 }
                 break;
             }
 
+            /*
+            --------------------------------------------------
+            Exit program
+            --------------------------------------------------
+            */
             case 5:
                 cout << "Exiting the program. Goodbye!\n";
                 this_thread::sleep_for(chrono::seconds(2));
